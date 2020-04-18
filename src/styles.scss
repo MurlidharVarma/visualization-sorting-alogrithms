@@ -1,0 +1,25 @@
+* { box-sizing: border-box; }
+
+:root{
+    --bg-color: #EFEEEE;
+    --orange: linear-gradient(90deg, orange, red);
+    --green: linear-gradient(90deg, lime, green);
+    --blue: linear-gradient(90deg, skyblue, steelblue);
+    --magenta: linear-gradient(90deg, pink, magenta);
+}
+body{
+    background-color: var(--bg-color);
+    height: 100vh;
+    overflow-x: hidden;
+}
+
+.credit{
+    position: absolute;
+    bottom: 0;
+    right:0;
+    margin: 10px;
+    color: grey;
+    font-size: 0.8em;
+    letter-spacing: 0.1rem;
+    font-family: monospace;
+}

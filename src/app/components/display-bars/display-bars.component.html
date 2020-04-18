@@ -1,0 +1,62 @@
+<div>
+    <span class="inpt">
+        <span>Bars</span>
+        <input type="number" [formControl]="numberOfBars" class="inptBox"/>
+        <span *ngIf="numberOfBars.errors">Required and should be between 10 to 50</span>
+    </span>
+
+    <span [class]="'btn '+ (isShuffleClicked?'btn-click':'')" (click)="shuffle()">
+        <span [class]="(isShuffleClicked?'btn_on':'btn_off')"></span>
+        Shuffle
+    </span>
+
+    <span [class]="'btn '+ (isResetClicked?'btn-click':'')" (click)="reset()">
+        <span [class]="(isResetClicked?'btn_on':'btn_off')"></span>
+        Reset
+    </span>
+
+    
+    <span [class]="'btn '+ (isSortingStarted?'btn-click':'')" (click)="sortStart()" style="float:right;">
+        <span [class]="(isSortingStarted?'btn_on':'btn_off')"></span>
+        Sort
+    </span>
+
+    <span class="sortType-container" style="float:right;">
+        <span class="round-button" (click)="changeSortType('left')"><span class='left-arrow'></span></span>
+        <span class="sortType">{{SORT_TYPES[sortTypeIdx]}}</span>
+        <span class="round-button" (click)="changeSortType('right')"><span class='right-arrow'></span></span>
+    </span>
+
+</div>
+<div class="bars-container">
+    <ng-container *ngFor="let bar of range; let idx=index">
+        <bar class="bar" [val]="bar.value" [color]="bar.color"></bar>
+    </ng-container>
+</div>
+<span class="statBox" title="Comparisions">
+    {{NO_OF_COMPARISION}}
+</span>
+<span class="statBox" title="Swaps">
+    {{NO_OF_SWAPS}}
+</span>
+<span class="statBox" title="Time (sec)">
+    {{EXECUTION_TIME}}
+</span>
+<span class="legend-container">
+    <span class="legend">
+        <span class="legend-icon legend-icon-orange"></span>
+        <span class="legend-icon-text">Bar not being analyzed</span>
+    </span>
+    <span class="legend">
+        <span class="legend-icon legend-icon-green"></span>
+        <span class="legend-icon-text">Bar being analyzed</span>
+    </span>
+    <span class="legend">
+        <span class="legend-icon legend-icon-magenta"></span>
+        <span class="legend-icon-text">Bars ready for swap</span>
+    </span>
+    <span class="legend">
+        <span class="legend-icon legend-icon-blue"></span>
+        <span class="legend-icon-text">Sorted bar</span>
+    </span>
+</span>
