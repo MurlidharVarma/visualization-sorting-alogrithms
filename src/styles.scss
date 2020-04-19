@@ -1,16 +1,28 @@
 * { box-sizing: border-box; }
 
 :root{
-    --bg-color: #EFEEEE;
     --orange: linear-gradient(90deg, orange, red);
     --green: linear-gradient(90deg, lime, green);
     --blue: linear-gradient(90deg, skyblue, steelblue);
     --magenta: linear-gradient(90deg, pink, magenta);
 }
 body{
-    background-color: var(--bg-color);
-    height: 100vh;
-    overflow-x: hidden;
+    margin: 0px; 
+    padding: 0px;
+}
+
+.light{
+    --bg-color: #EFEEEE;
+    --br-color: #D1DFDF;
+    --tl-color: #FFFFFF;
+    --bar-label-color: grey;
+}
+
+.dark{
+    --bg-color: #121212;
+    --br-color: #070707;
+    --tl-color: #1d1d1d;
+    --bar-label-color: lime;
 }
 
 .credit{

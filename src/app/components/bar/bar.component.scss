@@ -7,8 +7,8 @@
     margin: 10px 10px;
     position: relative;
     border-radius: 10px;
-    box-shadow:  inset 3px 3px 3px #D1DFDF,
-                 inset -3px -3px 3px #FFFFFF;
+    box-shadow:  inset 3px 3px 3px var(--br-color),
+                 inset -3px -3px 3px var(--tl-color);
 }
 
 .bar-val-change{
@@ -39,6 +39,7 @@
 .level::before{
     content: attr(title);
     font-size: 0.6em;
+    color: var(--bar-label-color);
     margin-left: 2px;
     position: absolute;
     top:-10px;

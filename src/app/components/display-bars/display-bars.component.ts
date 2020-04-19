@@ -10,10 +10,19 @@ import * as utils from '../../utils';
 })
 export class DisplayBarsComponent implements OnInit {
 
+  isLight:boolean = true;
+  
   NUMBER_OF_BARS: number=50;
   NO_OF_COMPARISION: number=0;
   NO_OF_SWAPS: number=0;
   EXECUTION_TIME:any=0;
+
+  DELAY_TYPES=["FAST", "MEDIUM", "SLOW"];
+  DELAY=0;
+  DELAY_SPEED=[0,25,100];
+  DELAY_TYPE="FAST";
+  delayTypeIdx=0;
+  delayTypeMaxIdx = this.DELAY_TYPES.length-1;
 
   SORT_TYPE = "quick";
   SORT_TYPES = ["quick","bubble"];
@@ -31,22 +40,44 @@ export class DisplayBarsComponent implements OnInit {
   isResetClicked=false;
 
   constructor() {
+    //initializing numbers from 1 to 100
     this.numberSet = _.shuffle(_.range(1, 100));
     
+    //form control for number of bars field
     this.numberOfBars = new FormControl(this.NUMBER_OF_BARS,Validators.compose([Validators.required, Validators.min(10), Validators.max(50)]));
 
+    //observing changes made to number of bars and accordingly rendering bars
     this.numberOfBars.valueChanges.subscribe((data:number)=>{
-      if(data){
+      if(data &&  this.numberOfBars.valid){
         this.NUMBER_OF_BARS = data;
         this.resize();
       }
     })
   }
 
+  // on page load resize number of bars based on default value
   ngOnInit(): void {
     this.resize();
   }
 
+  toggleTheme(){
+    this.isLight = !this.isLight;
+  }
+  
+  // function that controls the change made in alogirthm selection using the arrow buttons
+  changeSpeed(arrow){
+    if(arrow=='left' && this.delayTypeIdx != 0){
+      this.delayTypeIdx--;
+      this.DELAY_TYPE = this.DELAY_TYPES[this.delayTypeIdx];
+      this.DELAY = this.DELAY_SPEED[this.delayTypeIdx];
+    }else if(arrow == 'right' && this.delayTypeIdx != this.delayTypeMaxIdx){
+      this.delayTypeIdx++;
+      this.DELAY_TYPE = this.DELAY_TYPES[this.delayTypeIdx];
+      this.DELAY = this.DELAY_SPEED[this.delayTypeIdx];
+    }
+  }
+
+  // function that controls the change made in alogirthm selection using the arrow buttons
   changeSortType(arrow){
     if(arrow=='left' && this.sortTypeIdx != 0){
       this.sortTypeIdx--;
@@ -57,6 +88,7 @@ export class DisplayBarsComponent implements OnInit {
     }
   }
 
+  // Reset button function
   async reset(){
     this.isResetClicked=true;
     this.breakSorting=true;
@@ -66,6 +98,7 @@ export class DisplayBarsComponent implements OnInit {
     this.isResetClicked=false;
   }
 
+  // changes the number of bars on screen
   resize(){
     this.range = _.chain(this.numberSet)
                   .first(this.NUMBER_OF_BARS)
@@ -79,6 +112,7 @@ export class DisplayBarsComponent implements OnInit {
     this.original = JSON.parse(JSON.stringify(this.range));
   }
 
+  // Shuffle the bar values to random numbers
   async shuffle(){
     this.isShuffleClicked=true;
     this.breakSorting=true;
@@ -99,14 +133,16 @@ export class DisplayBarsComponent implements OnInit {
       this.breakSorting=false;
   }
 
+  // Initates sorting based on selected alogrithm
   async sortStart(){
-    if(this.isSortingStarted){
+    if(this.isSortingStarted || !this.numberOfBars.valid){
       return;
      }
     this.original = JSON.parse(JSON.stringify(this.range));
     this.isSortingStarted=true;
     this.NO_OF_COMPARISION = 0;
     this.NO_OF_SWAPS=0;
+    this.EXECUTION_TIME=0;
     let start = Date.now();
     let interval = setInterval(()=>{
       this.EXECUTION_TIME = Math.round((Date.now() - start)/1000);
@@ -121,13 +157,14 @@ export class DisplayBarsComponent implements OnInit {
     this.isSortingStarted=false;
   }
 
+  // assign color to bar at the a specific index
   async assignColor(idx, color){
     this.range[idx].color = color;
     this.range[idx] = Object.assign({},this.range[idx]);
-    await utils.sleep(25); 
+    await utils.sleep(this.DELAY); 
   }
 
-
+  // swap bars at the provided 2 indices.
   async swap(idx1, idx2){
 
     await this.assignColor(idx1, "magenta")
@@ -145,6 +182,7 @@ export class DisplayBarsComponent implements OnInit {
 
   }
 
+// Check if the bar on index 1 is smaller that 2
   isSmaller(idx1, idx2){
     if(this.range[idx1].value < this.range[idx2].value){
       return true;
@@ -153,14 +191,19 @@ export class DisplayBarsComponent implements OnInit {
     }
   }
 
+// Bubble sort logic
  async bubbleSort(){
+   
+    // loop thru each bar in the set
     for(let i=0; i<this.range.length; i++){
       await this.assignColor(i, "green");
 
+      // loop thru remaining bars for comparision
       for(let j=i; j<this.range.length; j++){
         this.NO_OF_COMPARISION++;
         await this.assignColor(j, "green");
-
+        
+        // if any bar is found smaller, then swap
         if(this.isSmaller(j,i)){
           await this.swap(j,i);
         }
@@ -174,26 +217,38 @@ export class DisplayBarsComponent implements OnInit {
    }
   }
 
+// Quick Sort logic
   async quickSort(){
     await this.doQuickSort(0,this.NUMBER_OF_BARS-1);
   }
 
+// Recursive method to do quick sort
   async doQuickSort(startIdx,endIdx){
+
+    // if the start and end indices are adjacent or same then return back.
+
     if(endIdx-startIdx <= 1){
+      //when this occurs means those respective bars are in sorted order
       await this.assignColor(startIdx,"blue");
       await this.assignColor(endIdx,"blue");
       return;
     }
 
+    // pick the pivot - in this case I am picking the one in middle.
     let pivotIdx = Math.floor((startIdx + endIdx)/2);
     let pivot = this.range[pivotIdx].value;
   
+    // leftIdx and rightIdx are the pointers scanning left and right respectively
     let leftIdx = startIdx;
     let rightIdx = endIdx;
     
     let foundLeft=false;
     let foundRight=false;
 
+    // loop until left and right indices crosses each other
+    // leftIndx will start from left moves towards right and find an element greater than pivot
+    // rightIndx will start from right moves towards left and find an element less than pivot
+    // if left and right scan finds respective numbers then swap
     while(leftIdx < rightIdx){
       let left=this.range[leftIdx].value;
       let right = this.range[rightIdx].value;
@@ -226,6 +281,8 @@ export class DisplayBarsComponent implements OnInit {
       await this.assignColor(rightIdx,"orange");
 
     }
+    //recursive call to split the array into smaller units based on where one of the indices has reached and surpassed other
+    //in this case I am using leftIdx position to split the array
     await this.doQuickSort(startIdx, leftIdx);
     await this.doQuickSort(leftIdx+1,endIdx);
 
