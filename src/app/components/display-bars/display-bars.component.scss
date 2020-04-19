@@ -6,15 +6,34 @@
     overflow-x: hidden;
 }
 
+.top-menu{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left-side-menu,
+.right-side-menu{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
 .bars-container{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(20px, 1fr));
-    grid-template-rows: 375px;
+    grid-template-columns: repeat(auto-fill, minmax(20px, 1fr));
+    grid-template-rows: 350px;
     grid-gap: 5px;
+    overflow-x: auto;
 }
 
 .bar{
     display: inline;
+    grid-row: 1;
 }
 
 @mixin text-shadow($color){
@@ -24,7 +43,8 @@
 .statBox{
     position: relative;
     color: orangered;
-    margin: 0 10px;
+    margin: 0px 10px;
+    margin-top:30px;
     width: 100px;
     height: 100px;
     font-size: 2rem;
@@ -266,7 +286,7 @@
     border-radius: 25px;
     width: 70px;
     position: relative;
-    top:15px;
+    top:5px;
     right:5px;
     padding: 3px 5px;
     margin:0px 10px;
@@ -305,4 +325,61 @@
     background-image: var(--orange);
     box-shadow: 3px 3px 3px var(--br-color), 
                 -3px -3px 3px var(--tl-color);
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 576px) {
+    .top-menu{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .left-side-menu,
+    .right-side-menu{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    }
+
+    .legend-container{
+        display: flex;
+        flex-direction: column;
+        // justify-content: flex-start;
+        // align-items: flex-start;
+    }
+
+    .legend{
+        display: flex;
+        flex-direction: row;
+        // justify-content: flex-start;
+        // align-items: flex-start;
+        // margin: 10px 20px;
+    }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 576px) and (max-width : 992px) {
+    .top-menu{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+
+    .left-side-menu,
+    .right-side-menu{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    }
+
+    .legend-container{
+        display: inline-flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
 }

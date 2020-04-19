@@ -1,40 +1,45 @@
 <div [class]="'page-container ' + (isLight?'light':'dark')">
-    <div>
-        <span class="switch-container" (click)="toggleTheme()" [style]="isLight?'justify-content:flex-start':'justify-content:flex-end'">
-            <span class="switch"></span>
-        </span>
-
-        <span class="inpt">
-            <span>Bars</span>
-            <input type="number" [formControl]="numberOfBars" class="inptBox"/>
-            <span class="errorMsg" *ngIf="numberOfBars.errors">Need value between 10 to 50</span>
-        </span>
-
-        <span [class]="'btn '+ (isShuffleClicked?'btn-click':'')" (click)="shuffle()">
-            <span [class]="(isShuffleClicked?'btn_on':'btn_off')"></span>
-            Shuffle
-        </span>
-
-        <span [class]="'btn '+ (isResetClicked?'btn-click':'')" (click)="reset()">
-            <span [class]="(isResetClicked?'btn_on':'btn_off')"></span>
-            Reset
-        </span>
+    <div class="top-menu">
+        <span class="left-side-menu">
+            <span class="switch-container" (click)="toggleTheme()" [style]="isLight?'justify-content:flex-start':'justify-content:flex-end'">
+                <span class="switch"></span>
+            </span>
     
-        <span [class]="'btn '+ (isSortingStarted?'btn-click':'')" (click)="sortStart()" style="float:right;">
-            <span [class]="(isSortingStarted?'btn_on':'btn_off')"></span>
-            Sort
+            <span class="inpt">
+                <span>Bars</span>
+                <input type="number" [formControl]="numberOfBars" class="inptBox"/>
+                <span class="errorMsg" *ngIf="numberOfBars.errors">Need value between 10 to 50</span>
+            </span>
+    
+            <span [class]="'btn '+ (isShuffleClicked?'btn-click':'')" (click)="shuffle()">
+                <span [class]="(isShuffleClicked?'btn_on':'btn_off')"></span>
+                Shuffle
+            </span>
+    
+            <span [class]="'btn '+ (isResetClicked?'btn-click':'')" (click)="reset()">
+                <span [class]="(isResetClicked?'btn_on':'btn_off')"></span>
+                Reset
+            </span>
         </span>
+        
+        <span class="right-side-menu">
+            <span class="speed-container">
+                <span class="round-button" (click)="changeSpeed('left')"><span class='left-arrow'></span></span>
+                <span class="speedType">{{DELAY_TYPES[delayTypeIdx]}}</span>
+                <span class="round-button" (click)="changeSpeed('right')"><span class='right-arrow'></span></span>
+            </span>
+            
+            <span class="sortType-container">
+                <span class="round-button" (click)="changeSortType('left')"><span class='left-arrow'></span></span>
+                <span class="sortType">{{SORT_TYPES[sortTypeIdx]}}</span>
+                <span class="round-button" (click)="changeSortType('right')"><span class='right-arrow'></span></span>
+            </span>
+            
+            <span [class]="'btn '+ (isSortingStarted?'btn-click':'')" (click)="sortStart()">
+                <span [class]="(isSortingStarted?'btn_on':'btn_off')"></span>
+                Sort
+            </span>
 
-        <span class="sortType-container" style="float:right;">
-            <span class="round-button" (click)="changeSortType('left')"><span class='left-arrow'></span></span>
-            <span class="sortType">{{SORT_TYPES[sortTypeIdx]}}</span>
-            <span class="round-button" (click)="changeSortType('right')"><span class='right-arrow'></span></span>
-        </span>
-
-        <span class="speed-container" style="float:right;">
-            <span class="round-button" (click)="changeSpeed('left')"><span class='left-arrow'></span></span>
-            <span class="speedType">{{DELAY_TYPES[delayTypeIdx]}}</span>
-            <span class="round-button" (click)="changeSpeed('right')"><span class='right-arrow'></span></span>
         </span>
 
     </div>
