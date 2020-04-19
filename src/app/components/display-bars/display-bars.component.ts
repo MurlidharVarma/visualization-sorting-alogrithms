@@ -12,7 +12,7 @@ export class DisplayBarsComponent implements OnInit {
 
   isLight:boolean = true;
   
-  NUMBER_OF_BARS: number=50;
+  NUMBER_OF_BARS: number=49;
   NO_OF_COMPARISION: number=0;
   NO_OF_SWAPS: number=0;
   EXECUTION_TIME:any=0;
@@ -220,6 +220,7 @@ export class DisplayBarsComponent implements OnInit {
 // Quick Sort logic
   async quickSort(){
     await this.doQuickSort(0,this.NUMBER_OF_BARS-1);
+    return;
   }
 
 // Recursive method to do quick sort
