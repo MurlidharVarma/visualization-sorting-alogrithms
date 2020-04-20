@@ -4,7 +4,8 @@ Visualize sorting algorithms! <br>
 You can choose the number of visual bars and apply different sorting algorithms for visualization. You can slow down and pace up the sorting processing for better understanding. <br>
 The code is built entirely on Angular v9.0.3 and with Neumorphic UI design and as now has bubble and quick sort algorithm<br>
 
-Try demo here: https://murlidharvarma.github.io/visualization-sorting-alogrithms/
+## Try demo here: 
+https://murlidharvarma.github.io/visualization-sorting-alogrithms/
 
 ![Alt text](/demo.gif?raw=true "Preview")
 
