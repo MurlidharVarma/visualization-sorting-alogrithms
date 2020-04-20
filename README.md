@@ -7,6 +7,7 @@ The code is built entirely on Angular v9.0.3 and with Neumorphic UI design and a
 ## Try demo here: 
 https://murlidharvarma.github.io/visualization-sorting-alogrithms/
 
+## Preview
 ![Alt text](/demo.gif?raw=true "Preview")
 
 ## Run in your local
